@@ -1,0 +1,20 @@
+﻿{
+  "version": "1.0.0-*",
+  "name": "pmsb",
+  "compilationOptions": {
+    "emitEntryPoint": true
+  },
+  "dependencies": {
+    "NETStandard.Library": "1.0.0-rc2-23727",
+    "dotnet-projectmodel-server": "1.0.0-*",
+    "dotnet-projectmodel-server.Tests": "1.0.0-*"
+  },
+  "commands": {
+    "run": "ProjectModelServer.Bootstrapper"
+  },
+  "frameworks": {
+    "dnxcore50": {
+      "imports": "portable-net45+win8"
+    }
+  }
+}

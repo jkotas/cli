@@ -35,6 +35,7 @@ namespace Microsoft.DotNet.ProjectModel.Server
             var allExports = context.CreateExporter(configuration)
                                     .GetAllExports()
                                     .ToDictionary(export => export.Library.GetUniqueName());
+
             var allSourceFiles = new List<string>(context.ProjectFile.Files.SourceFiles);
             var allFileReferences = new List<string>();
             var allProjectReferences = new List<ProjectReferenceDescription>();

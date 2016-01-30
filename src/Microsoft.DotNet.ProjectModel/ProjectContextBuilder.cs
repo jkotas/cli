@@ -267,6 +267,8 @@ namespace Microsoft.DotNet.ProjectModel
                                          ReferenceAssemblyDependencyResolver referenceAssemblyDependencyResolver,
                                          out bool requiresFrameworkAssemblies)
         {
+            /// Remark: the LibraryType in the key of the given dictionary are all "Unspecified" at the beginning.
+
             requiresFrameworkAssemblies = false;
 
             foreach (var pair in libraries.ToList())
@@ -292,14 +294,22 @@ namespace Microsoft.DotNet.ProjectModel
                         requiresFrameworkAssemblies = true;
 
                         // Remove the original package reference
+                        var originalReference = libraries[pair.Key];
                         libraries.Remove(pair.Key);
 
-                        // Add the reference to the refernce assembly.  
-                        libraries[new LibraryKey(replacement.Identity.Name)] = replacement;
-
-                        continue;
+                        // Insert a reference assembly key if there isn't one
+                        var key = new LibraryKey(replacement.Identity.Name, LibraryType.ReferenceAssembly);
+                        if (!libraries.ContainsKey(key))
+                        {
+                            libraries[key] = replacement;
+                        }
                     }
                 }
+            }
+
+            foreach (var pair in libraries.ToList())
+            {
+                var library = pair.Value;
 
                 library.Framework = library.Framework ?? TargetFramework;
                 foreach (var dependency in library.Dependencies)
@@ -307,28 +317,28 @@ namespace Microsoft.DotNet.ProjectModel
                     var keyType = dependency.Target == LibraryType.ReferenceAssembly ? LibraryType.ReferenceAssembly : LibraryType.Unspecified;
                     var key = new LibraryKey(dependency.Name, keyType);
 
-                    LibraryDescription dep;
-                    if (!libraries.TryGetValue(key, out dep))
+                    LibraryDescription dependencyDescription;
+                    if (!libraries.TryGetValue(key, out dependencyDescription))
                     {
                         if (Equals(LibraryType.ReferenceAssembly, dependency.Target))
                         {
                             requiresFrameworkAssemblies = true;
 
-                            dep = referenceAssemblyDependencyResolver.GetDescription(dependency, TargetFramework) ??
+                            dependencyDescription = referenceAssemblyDependencyResolver.GetDescription(dependency, TargetFramework) ??
                                   UnresolvedDependencyProvider.GetDescription(dependency, TargetFramework);
 
-                            dep.Framework = TargetFramework;
-                            libraries[key] = dep;
+                            dependencyDescription.Framework = TargetFramework;
+                            libraries[key] = dependencyDescription;
                         }
                         else
                         {
-                            dep = UnresolvedDependencyProvider.GetDescription(dependency, TargetFramework);
-                            libraries[key] = dep;
+                            dependencyDescription = UnresolvedDependencyProvider.GetDescription(dependency, TargetFramework);
+                            libraries[key] = dependencyDescription;
                         }
                     }
 
-                    dep.RequestedRanges.Add(dependency);
-                    dep.Parents.Add(library);
+                    dependencyDescription.RequestedRanges.Add(dependency);
+                    dependencyDescription.Parents.Add(library);
                 }
             }
         }

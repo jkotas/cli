@@ -1,0 +1,50 @@
+﻿{
+  "userSecretsId": "aspnet5-WebApplication8-4d0e7572-c3c7-4991-8dff-bdd587fdcec8",
+  "version": "1.0.0-*",
+  "compilationOptions": {
+    "emitEntryPoint": true
+  },
+
+  "dependencies": {
+    "EntityFramework.Commands": "7.0.0-rc2-16649",
+    "EntityFramework.MicrosoftSqlServer": "7.0.0-rc2-16649",
+    "Microsoft.AspNet.Authentication.Cookies": "1.0.0-rc2-16216",
+    "Microsoft.AspNet.Diagnostics.Entity": "7.0.0-rc2-16405",
+    "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc2-16304",
+    "Microsoft.AspNet.IISPlatformHandler": "1.0.0-rc2-16069",
+    "Microsoft.AspNet.Mvc": "6.0.0-rc2-16770",
+    "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc2-16770",
+    "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc2-16236",
+    "Microsoft.AspNet.StaticFiles": "1.0.0-rc2-16107",
+    "Microsoft.AspNet.Tooling.Razor": "1.0.0-rc2-16051",
+    "Microsoft.Extensions.CodeGenerators.Mvc": "1.0.0-rc2-16221",
+    "Microsoft.Extensions.Configuration.FileProviderExtensions": "1.0.0-rc2-15952",
+    "Microsoft.Extensions.Configuration.Json": "1.0.0-rc2-15952",
+    "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc2-15948",
+    "Microsoft.Extensions.Logging": "1.0.0-rc2-15958",
+    "Microsoft.Extensions.Logging.Console": "1.0.0-rc2-15958",
+    "Microsoft.Extensions.Logging.Debug": "1.0.0-rc2-15958",
+    "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc2-16226"
+  },
+
+  "commands": {
+    "web": "WebApplication8",
+    "ef": "EntityFramework.Commands"
+  },
+
+  "frameworks": {
+    "dnx451": { }
+  },
+
+  "exclude": [
+    "wwwroot",
+    "node_modules"
+  ],
+  "publishExclude": [
+    "**.user",
+    "**.vspscc"
+  ],
+  "scripts": {
+    "prepublish": [ "npm install", "bower install", "gulp clean", "gulp min" ]
+  }
+}

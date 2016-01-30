@@ -21,6 +21,21 @@ namespace Microsoft.DotNet.ProjectModel.Server.Tests
         }
 
         [Fact]
+        public void InitalizeDemoWebApplication()
+        {
+            var projectPath = _testHelper.FindSampleProject("DemoWebApplication");
+            Assert.NotNull(projectPath);
+
+            using (var server = new DthTestServer(_testHelper.LoggerFactory))
+            using (var client = new DthTestClient(server))
+            {
+                client.Initialize(projectPath);
+
+                var messages = client.DrainAllMessages();
+            }
+        }
+
+        [Fact]
         public void DthStartup_GetProjectInformation()
         {
             var projectPath = _testHelper.FindSampleProject("EmptyConsoleApp");
