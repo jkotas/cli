@@ -24,21 +24,6 @@ source "$DIR/../common/_common.sh"
 
 PROJECTS=( \
     dotnet \
-    dotnet-build \
-    dotnet-compile \
-    dotnet-compile-csc \
-    dotnet-compile-fsc \
-    dotnet-compile-native \
-    dotnet-new \
-    dotnet-pack \
-    dotnet-projectmodel-server \
-    dotnet-publish \
-    dotnet-repl \
-    dotnet-repl-csi \
-    dotnet-restore \
-    dotnet-resgen \
-    dotnet-run \
-    dotnet-test \
 )
 
 BINARIES_FOR_COREHOST=( \
